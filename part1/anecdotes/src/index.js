@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 const App = ({anecdotes}) => {
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(anecdotes.map( () => 0 ))
-  console.log(points); 
 
   const handleNextAnecdoteClick = () => {
     const rand = Math.floor(Math.random() * anecdotes.length)
@@ -17,14 +16,23 @@ const App = ({anecdotes}) => {
     setPoints(updatedPoints);
   }
 
+  const maxPoint = points.reduce((acc, curr, idx) => Math.max(acc, curr))
+  const maxPointIndex = points.findIndex(num => num === maxPoint)
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>
         {anecdotes[selected]}<br />
         has {points[selected]} votes
       </p>
       <button onClick={handleVoteClick}>vote</button>
       <button onClick={handleNextAnecdoteClick}>next anecdote</button>
+      <h2>Anecdote with most votes</h2>
+      <p>
+        {anecdotes[maxPointIndex]}<br />
+        has {maxPoint} votes
+      </p>
     </div>
   )
 }
